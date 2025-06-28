@@ -1,4 +1,4 @@
-@extends("layouts.default")
+@extends("layouts.auth")
 
 @section("style")
 <style>
@@ -37,7 +37,15 @@
     <img class="mb-4" src="{{ asset('assets/img/ToDo.jpeg') }}" alt="ToDo Logo" width="100" height="100">
     <h1 class="h3 mb-3 fw-normal">Register</h1>
 
-    {{-- Show all validation errors --}}
+    {{-- ✅ Success and Error Alerts --}}
+    @if (session('success'))
+      <div class="alert alert-success mb-3">{{ session('success') }}</div>
+    @endif
+
+    @if (session('error'))
+      <div class="alert alert-danger mb-3">{{ session('error') }}</div>
+    @endif
+
     @if ($errors->any())
       <div class="alert alert-danger mb-3">
         <ul class="mb-0">
@@ -48,14 +56,7 @@
       </div>
     @endif
 
-    @if (session('success'))
-      <div class="alert alert-success mb-3">{{ session('success') }}</div>
-    @endif
-
-    @if (session('error'))
-      <div class="alert alert-danger mb-3">{{ session('error') }}</div>
-    @endif
-
+    {{-- ✅ Name --}}
     <div class="form-floating">
       <input name="name" type="text" class="form-control" id="floatingName" placeholder="Your Name" value="{{ old('name') }}" required autofocus>
       <label for="floatingName">Full Name</label>
@@ -64,6 +65,7 @@
       @enderror
     </div>
 
+    {{-- ✅ Email --}}
     <div class="form-floating">
       <input name="email" type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" value="{{ old('email') }}" required>
       <label for="floatingEmail">Email address</label>
@@ -72,6 +74,7 @@
       @enderror
     </div>
 
+    {{-- ✅ Password --}}
     <div class="form-floating">
       <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
       <label for="floatingPassword">Password</label>
@@ -80,6 +83,7 @@
       @enderror
     </div>
 
+    {{-- ✅ Confirm Password --}}
     <div class="form-floating">
       <input name="password_confirmation" type="password" class="form-control" id="floatingConfirm" placeholder="Confirm Password" required>
       <label for="floatingConfirm">Confirm Password</label>

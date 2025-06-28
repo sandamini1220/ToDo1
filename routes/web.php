@@ -12,9 +12,7 @@ Route::get('/', function () {
 Route::get('/login', [AuthManager::class, 'login'])->name('login');
 Route::post('/login', [AuthManager::class, 'loginpost'])->name('login.post');
 
-
 Route::get('/register', [AuthManager::class, 'register'])->name('register');
 Route::post('/register', [AuthManager::class, 'registerpost'])->name('register.post');
-
 
 Route::post('/logout', [AuthManager::class, 'logout'])->name('logout');
