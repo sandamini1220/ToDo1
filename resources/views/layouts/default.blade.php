@@ -8,9 +8,8 @@
     @yield('style')
   </head>
   <body class="d-flex align-items-center py-4 bg-body-tertiary">
-    <div>
-        @yield('content')
-    </div>
+  @yield('content')
+    
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
   </body>
 </html>
