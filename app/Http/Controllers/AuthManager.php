@@ -1,16 +1,16 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;  
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AuthManager extends Controller
 {
     /**
-     * Show the login form.
+     * Show login form.
      */
     public function login()
     {
@@ -18,7 +18,7 @@ class AuthManager extends Controller
     }
 
     /**
-     * Handle login form submission.
+     * Handle login form POST.
      */
     public function loginpost(Request $request)
     {
@@ -30,6 +30,7 @@ class AuthManager extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+            $request->session()->regenerate(); // Prevent session fixation
             return redirect()->intended(route('home'));
         }
 
@@ -39,12 +40,11 @@ class AuthManager extends Controller
     }
 
     /**
-     * Handle user logout.
+     * Logout the user.
      */
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
@@ -52,7 +52,7 @@ class AuthManager extends Controller
     }
 
     /**
-     * Show the registration form.
+     * Show registration form.
      */
     public function register()
     {
@@ -60,26 +60,26 @@ class AuthManager extends Controller
     }
 
     /**
-     * Handle registration form submission.
+     * Handle registration form POST.
      */
     public function registerpost(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed', // make sure you include password_confirmation in form
+            'password' => 'required|min:8|confirmed', // 'password_confirmation' field required in form
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
         if ($user) {
-            return redirect()->route('login')->with('success', 'Registration Successful');
+            return redirect()->route('login')->with('success', 'Registration Successful!');
         }
 
-        return redirect()->route('register')->with('error', 'Registration Failed');
+        return redirect()->route('register')->with('error', 'Registration Failed.');
     }
 }

@@ -3,16 +3,30 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@yield('title', 'To Do App - Auth')</title>
+    <title>@yield('title', 'To Do App')</title>
+
+    <!-- Bootstrap CSS -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+
+    <!-- Custom Styles -->
     @yield('style')
   </head>
-  <body class="d-flex flex-column h-100 justify-content-center align-items-center" style="min-height: 100vh;">
+  <body class="d-flex flex-column h-100">
 
-    <div class="w-100" style="max-width: 400px;">
-      @yield('content')
-    </div>
+    <!-- Header -->
+    @include('include.header')
 
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <!-- Main Content -->
+    <main class="flex-shrink-0" style="padding-top: 70px;">
+      <div class="container">
+        @yield('content')
+      </div>
+    </main>
+
+    <!-- Footer -->
+    @include('include.footer')
+
+    <!-- Bootstrap JS -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
   </body>
 </html>
